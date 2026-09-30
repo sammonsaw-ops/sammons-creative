@@ -18,12 +18,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sammonscreative.com"),
   title: {
     default: "Sammons Creative — Images, Ideas, Impact",
     template: "%s · Sammons Creative",
   },
   description:
-    "Photography and graphic design portfolio by Sammons Creative. Sports, real estate, and design work rendered as a hand-flipped album.",
+    "Photography and graphic design by Sammons Creative — sports, form & structure, and design work rendered as a hand-flipped album.",
+  openGraph: {
+    title: "Sammons Creative — Images, Ideas, Impact",
+    description:
+      "Photography and graphic design portfolio by Sammons Creative.",
+    url: "https://sammonscreative.com",
+    siteName: "Sammons Creative",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sammons Creative — Images, Ideas, Impact",
+    description:
+      "Photography and graphic design portfolio by Sammons Creative.",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

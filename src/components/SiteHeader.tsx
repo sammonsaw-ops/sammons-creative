@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const portfolios = [
   { href: "/sports", label: "Sports Photography" },
-  { href: "/real-estate", label: "Real Estate Photography" },
+  { href: "/form-structure", label: "Form & Structure Photography" },
   { href: "/graphic-design", label: "Graphic Design" },
   { href: "/side-projects", label: "Side Projects" },
 ];

@@ -4,7 +4,7 @@ import { galleries } from "@/content/galleries";
 
 const covers: Record<string, string | null> = {
   sports: "/galleries/sports/game-1-09.jpg",
-  "real-estate": null,
+  "form-structure": null,
   "graphic-design": "/galleries/graphic-design/4-h-nova-scotia.png",
   "side-projects": null,
 };

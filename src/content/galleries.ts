@@ -278,13 +278,13 @@ const graphicDesign: DesignGallery = {
   ],
 };
 
-const realEstate: ComingSoonGallery = {
-  id: "real-estate",
+const formStructure: ComingSoonGallery = {
+  id: "form-structure",
   kind: "coming-soon",
-  title: "Real Estate Photography",
-  subtitle: "Listing and lifestyle photography",
+  title: "Form & Structure Photography",
+  subtitle: "Architecture · Buildings · Infrastructure",
   intro:
-    "New real estate portfolio coming soon. In the meantime, reach out for shoot inquiries and rates.",
+    "New portfolio coming soon. In the meantime, reach out for shoot inquiries and rates.",
 };
 
 const sideProjects: ComingSoonGallery = {
@@ -295,7 +295,7 @@ const sideProjects: ComingSoonGallery = {
   intro: "Selected personal work will land here shortly.",
 };
 
-export const galleries: Gallery[] = [sports, graphicDesign, realEstate, sideProjects];
+export const galleries: Gallery[] = [sports, graphicDesign, formStructure, sideProjects];
 
 export function getGallery(id: string): Gallery | undefined {
   return galleries.find((g) => g.id === id);
