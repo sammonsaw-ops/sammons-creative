@@ -1,5 +1,8 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const portfolios = [
   { href: "/sports", label: "Sports Photography" },
@@ -9,6 +12,15 @@ const portfolios = [
 ];
 
 export function SiteHeader() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  const close = () => setMobileOpen(false);
+
   return (
     <header className="sticky top-0 z-40 bg-background/90 backdrop-blur border-b border-line">
       <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between gap-6">
@@ -67,34 +79,60 @@ export function SiteHeader() {
             Promo-Builder ↗
           </a>
         </nav>
-        <details className="md:hidden relative">
-          <summary className="list-none cursor-pointer select-none px-2 py-1 text-sm">Menu</summary>
-          <div className="absolute right-0 top-full mt-2 bg-background border border-line shadow-sm rounded-sm py-2 min-w-[200px]">
-            <Link
-              href="/portfolios"
-              className="block px-4 py-2 hover:bg-line/50 font-medium border-b border-line mb-1"
+        <div className="md:hidden relative">
+          <button
+            type="button"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMobileOpen((v) => !v)}
+            className="cursor-pointer select-none px-2 py-1 text-sm"
+          >
+            {mobileOpen ? "Close" : "Menu"}
+          </button>
+          {mobileOpen && (
+            <div
+              id="mobile-menu"
+              className="absolute right-0 top-full mt-2 bg-background border border-line shadow-sm rounded-sm py-2 min-w-[220px]"
             >
-              All portfolios
-            </Link>
-            {portfolios.map((p) => (
-              <Link key={p.href} href={p.href} className="block px-4 py-2 hover:bg-line/50">
-                {p.label}
+              <Link
+                href="/portfolios"
+                onClick={close}
+                className="block px-4 py-2 hover:bg-line/50 font-medium border-b border-line mb-1"
+              >
+                All portfolios
               </Link>
-            ))}
-            <div className="border-t border-line my-2" />
-            <Link href="/pricing" className="block px-4 py-2 hover:bg-line/50">Pricing</Link>
-            <Link href="/about" className="block px-4 py-2 hover:bg-line/50">About</Link>
-            <Link href="/contact" className="block px-4 py-2 hover:bg-line/50">Contact</Link>
-            <a
-              href="https://promo-builder.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block px-4 py-2 hover:bg-line/50 text-muted"
-            >
-              Promo-Builder ↗
-            </a>
-          </div>
-        </details>
+              {portfolios.map((p) => (
+                <Link
+                  key={p.href}
+                  href={p.href}
+                  onClick={close}
+                  className="block px-4 py-2 hover:bg-line/50"
+                >
+                  {p.label}
+                </Link>
+              ))}
+              <div className="border-t border-line my-2" />
+              <Link href="/pricing" onClick={close} className="block px-4 py-2 hover:bg-line/50">
+                Pricing
+              </Link>
+              <Link href="/about" onClick={close} className="block px-4 py-2 hover:bg-line/50">
+                About
+              </Link>
+              <Link href="/contact" onClick={close} className="block px-4 py-2 hover:bg-line/50">
+                Contact
+              </Link>
+              <a
+                href="https://promo-builder.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={close}
+                className="block px-4 py-2 hover:bg-line/50 text-muted"
+              >
+                Promo-Builder ↗
+              </a>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );
