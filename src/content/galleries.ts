@@ -266,7 +266,7 @@ const sports: PhotoGallery = {
   id: "sports",
   kind: "photo",
   title: "Sports Photography",
-  cover: "/galleries/sports/game-1-09.jpg",
+  cover: "/galleries/sports/afl-canada/img-0863.jpg",
   sections: [
     {
       id: "gaa-canada",
@@ -338,7 +338,7 @@ const bannerCampaignProjects: DesignProject[] = [
 
 const independentProjects: DesignProject[] = [
   {
-    title: "Aggressive Goose Brewing Co.",
+    title: "Aggressive Goose Brewing",
     description:
       "Full brand proposal for a craft brewery — primary mark, mono variant, three-colour palette, and a four-beer label architecture, delivered end-to-end. 2025.",
     images: [
@@ -365,7 +365,7 @@ const independentProjects: DesignProject[] = [
     ],
   },
   {
-    title: "Critical Gambling Studies Journal",
+    title: "Critical Gambling Studies (CGS) Journal",
     description:
       "Visual identity for a peer-reviewed open-access journal — wordmark, square mark, cover architecture, and templated artwork for web, slides, and social. 2021.",
     images: [
@@ -397,7 +397,7 @@ const graphicDesign: DesignGallery = {
   id: "graphic-design",
   kind: "design",
   title: "Graphic Design",
-  cover: "/galleries/graphic-design/4-h-nova-scotia.png",
+  cover: "/galleries/graphic-design/independent/rv-tolfraedi-feature.png",
   sections: [
     {
       id: "independent-projects",
