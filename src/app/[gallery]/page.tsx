@@ -74,6 +74,9 @@ export default async function GalleryPage({ params }: PageProps<"/[gallery]">) {
                 {g.intro}
               </p>
             )}
+            <p className="mt-6 text-xs uppercase tracking-[0.3em] text-muted">
+              Each piece opens in a new browser tab.
+            </p>
           </header>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {g.entries.map((e) => (
@@ -93,7 +96,7 @@ export default async function GalleryPage({ params }: PageProps<"/[gallery]">) {
                 )}
                 <p className="text-muted leading-relaxed mb-6">{e.description}</p>
                 <span className="text-xs uppercase tracking-[0.3em] text-accent group-hover:text-accent-hover">
-                  Open the piece ↗
+                  Open in a new tab ↗
                 </span>
               </a>
             ))}
