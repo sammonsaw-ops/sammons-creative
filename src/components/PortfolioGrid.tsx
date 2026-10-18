@@ -42,7 +42,7 @@ export function PortfolioGrid() {
                 </span>
               ) : (
                 <span className="mt-6 text-xs uppercase tracking-[0.3em] text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Open album →
+                  {g.kind === "experiments" ? "Open experiments →" : "Open album →"}
                 </span>
               )}
             </div>

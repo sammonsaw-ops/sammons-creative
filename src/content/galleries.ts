@@ -27,6 +27,8 @@ export type DesignProject = {
   images: string[];
 };
 
+export type DesignSectionLayout = "desc-image" | "image-pair";
+
 export type DesignSection = {
   id: string;
   title: string;
@@ -34,6 +36,7 @@ export type DesignSection = {
   logo?: string;
   trailingLogo?: string;
   intro?: string;
+  layout?: DesignSectionLayout;
   projects: DesignProject[];
 };
 
@@ -55,7 +58,29 @@ export type ComingSoonGallery = {
   intro?: string;
 };
 
-export type Gallery = PhotoGallery | DesignGallery | ComingSoonGallery;
+export type ExperimentEntry = {
+  id: string;
+  title: string;
+  subtitle?: string;
+  description: string;
+  href: string;
+  cover?: string;
+};
+
+export type ExperimentsGallery = {
+  id: string;
+  kind: "experiments";
+  title: string;
+  subtitle?: string;
+  intro?: string;
+  entries: ExperimentEntry[];
+};
+
+export type Gallery =
+  | PhotoGallery
+  | DesignGallery
+  | ComingSoonGallery
+  | ExperimentsGallery;
 
 const aflAtlanticImages = [
   "game-1-09.jpg",
@@ -260,6 +285,63 @@ const bannerCampaignProjects: DesignProject[] = [
   { title: "Wordbridge Writers' Society of Lethbridge", description: "Custom banner design.", images: ["/galleries/graphic-design/wordbridge-writers-society-of-lethbridge.png"] },
 ];
 
+const independentProjects: DesignProject[] = [
+  {
+    title: "Seeing All Sides — Liu Institute Lobby Gallery",
+    description:
+      "Twenty-piece photo exhibition and opening-night silent auction at UBC's Liu Institute Lobby Gallery, raising funds for the Environmental Youth Alliance. Concept, imagery, poster, and production, end-to-end. 2014.",
+    images: [
+      "/galleries/graphic-design/independent/liu-institute-feature.jpg",
+      "/galleries/graphic-design/independent/liu-institute-onepager.png",
+    ],
+  },
+  {
+    title: "Nova Scotia Power — Customer Solutions Trading Cards",
+    description:
+      "A five-week collectible trading card series that turned a 17-person Customer Solutions team into a league of their own — concepted, designed, produced, and distributed end-to-end. 2017.",
+    images: [
+      "/galleries/graphic-design/independent/nova-scotia-power-feature.png",
+      "/galleries/graphic-design/independent/nova-scotia-power-onepager.png",
+    ],
+  },
+  {
+    title: "Critical Gambling Studies Journal",
+    description:
+      "Visual identity for a peer-reviewed open-access journal — wordmark, square mark, cover architecture, and templated artwork for web, slides, and social. 2021.",
+    images: [
+      "/galleries/graphic-design/independent/critical-gambling-studies-feature.png",
+      "/galleries/graphic-design/independent/critical-gambling-studies-onepager.png",
+    ],
+  },
+  {
+    title: "PAC Lab Logo Refresh",
+    description:
+      "Logo refresh for a Dalhousie research lab studying physical activity in cancer care — the ribbon-heart stayed, and learned to walk. 2021.",
+    images: [
+      "/galleries/graphic-design/independent/paclab-feature.png",
+      "/galleries/graphic-design/independent/paclab-onepager.png",
+    ],
+  },
+  {
+    title: "RV Tölfræði ehf",
+    description:
+      "Logo design for a Reykjavík start-up offering tutoring and statistical consulting — two routes to the same word. 2022.",
+    images: [
+      "/galleries/graphic-design/independent/rv-tolfraedi-feature.png",
+      "/galleries/graphic-design/independent/rv-tolfraedi-onepager.png",
+    ],
+  },
+  {
+    title: "Aggressive Goose Brewing Co.",
+    description:
+      "Full brand proposal for a craft brewery — primary mark, mono variant, three-colour palette, and a four-beer label architecture, delivered end-to-end. 2025.",
+    images: [
+      "/galleries/graphic-design/independent/aggressive-goose-feature.png",
+      "/galleries/graphic-design/independent/aggressive-goose-onepager.png",
+    ],
+  },
+];
+
 const graphicDesign: DesignGallery = {
   id: "graphic-design",
   kind: "design",
@@ -267,12 +349,21 @@ const graphicDesign: DesignGallery = {
   cover: "/galleries/graphic-design/4-h-nova-scotia.png",
   sections: [
     {
+      id: "independent-projects",
+      title: "Independent Design Projects",
+      subtitle: "Select client and personal work · 2014 to present",
+      layout: "image-pair",
+      intro:
+        "A selection of independent design projects spanning more than a decade — brand identities, exhibition work, and campaign pieces delivered for clients across North America and Iceland. Each spread pairs a featured artifact on the left with its full case-study one-pager on the right.",
+      projects: independentProjects,
+    },
+    {
       id: "banner-campaigns",
       title: "Banner Creation",
       subtitle: "For non-profits and community organizations using Rafflebox",
       trailingLogo: "/sections/design/rafflebox.webp",
       intro:
-        "During my time at Rafflebox, I have served as the customer support team's de facto graphic designer, creating custom banners, promotional graphics, and digital assets for nonprofit and charitable organizations across Canada and the United States. I also developed a library of standardized design templates that enables support staff without formal design backgrounds to create consistent, on-brand promotional materials. This work combines hands-on graphic design with brand stewardship, visual consistency, and practical design solutions that support both clients and internal teams.",
+        "During my five years at Rafflebox, I have served as the customer support team's de facto graphic designer, creating custom banners, promotional graphics, and digital assets for nonprofit and charitable organizations across Canada and the United States. I also developed a library of standardized design templates that enables support staff without formal design backgrounds to create consistent, on-brand promotional materials. This work combines hands-on graphic design with brand stewardship, visual consistency, and practical design solutions that support both clients and internal teams.",
       projects: bannerCampaignProjects,
     },
   ],
@@ -287,12 +378,23 @@ const formStructure: ComingSoonGallery = {
     "New portfolio coming soon. In the meantime, reach out for shoot inquiries and rates.",
 };
 
-const sideProjects: ComingSoonGallery = {
+const sideProjects: ExperimentsGallery = {
   id: "side-projects",
-  kind: "coming-soon",
+  kind: "experiments",
   title: "Side Projects",
   subtitle: "Passion work and personal experiments",
-  intro: "Selected personal work will land here shortly.",
+  intro:
+    "A home for interactive experiments that sit between photography and design — pieces that are best experienced in motion rather than as still images.",
+  entries: [
+    {
+      id: "bc-place",
+      title: "BC Place",
+      subtitle: "Photograph · Wireframe · Gradient Mesh",
+      description:
+        "A night photograph of BC Place in Vancouver, reinterpreted as a hand-drawn wireframe and a gradient-mesh painting in Adobe Illustrator. Scroll through the piece to watch each medium dissolve into the next.",
+      href: "/side-projects/bc-place.html",
+    },
+  ],
 };
 
 export const galleries: Gallery[] = [sports, graphicDesign, formStructure, sideProjects];

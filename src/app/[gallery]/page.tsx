@@ -58,6 +58,48 @@ export default async function GalleryPage({ params }: PageProps<"/[gallery]">) {
           </div>
         </>
       )}
+
+      {g.kind === "experiments" && (
+        <>
+          <header className="mb-10 md:mb-14 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-accent mb-3">Portfolio</p>
+            <h1 className="font-serif text-4xl md:text-6xl">{g.title}</h1>
+            {g.subtitle && (
+              <p className="mt-4 text-lg text-muted italic max-w-2xl mx-auto">
+                {g.subtitle}
+              </p>
+            )}
+            {g.intro && (
+              <p className="mt-6 text-muted leading-relaxed max-w-2xl mx-auto">
+                {g.intro}
+              </p>
+            )}
+          </header>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {g.entries.map((e) => (
+              <a
+                key={e.id}
+                href={e.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block border border-line bg-white p-8 hover:border-accent transition-colors"
+              >
+                <p className="text-xs uppercase tracking-[0.3em] text-accent mb-3">
+                  Experiment
+                </p>
+                <h2 className="font-serif text-3xl leading-snug mb-2">{e.title}</h2>
+                {e.subtitle && (
+                  <p className="italic text-muted mb-4">{e.subtitle}</p>
+                )}
+                <p className="text-muted leading-relaxed mb-6">{e.description}</p>
+                <span className="text-xs uppercase tracking-[0.3em] text-accent group-hover:text-accent-hover">
+                  Open the piece ↗
+                </span>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

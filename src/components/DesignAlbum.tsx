@@ -25,7 +25,9 @@ type PageMeta =
   | { kind: "divider"; sectionIndex: number }
   | { kind: "intro"; sectionIndex: number }
   | { kind: "project-desc"; sectionIndex: number; projectIndex: number }
-  | { kind: "project-image"; sectionIndex: number; projectIndex: number };
+  | { kind: "project-image"; sectionIndex: number; projectIndex: number }
+  | { kind: "project-pair-left"; sectionIndex: number; projectIndex: number }
+  | { kind: "project-pair-right"; sectionIndex: number; projectIndex: number };
 
 const PAGE_W = 500;
 const PAGE_H = 640;
@@ -36,8 +38,13 @@ function buildPages(sections: DesignSection[]): PageMeta[] {
     pages.push({ kind: "divider", sectionIndex });
     if (section.intro) pages.push({ kind: "intro", sectionIndex });
     section.projects.forEach((_project, projectIndex) => {
-      pages.push({ kind: "project-desc", sectionIndex, projectIndex });
-      pages.push({ kind: "project-image", sectionIndex, projectIndex });
+      if (section.layout === "image-pair") {
+        pages.push({ kind: "project-pair-left", sectionIndex, projectIndex });
+        pages.push({ kind: "project-pair-right", sectionIndex, projectIndex });
+      } else {
+        pages.push({ kind: "project-desc", sectionIndex, projectIndex });
+        pages.push({ kind: "project-image", sectionIndex, projectIndex });
+      }
     });
   });
   pages.push({ kind: "cover-back" });
@@ -79,7 +86,8 @@ export function DesignAlbum({ title, subtitle, sections }: Props) {
   const findProjectPage = (sectionIndex: number, projectIndex: number) =>
     pages.findIndex(
       (p) =>
-        p.kind === "project-desc" &&
+        (p.kind === "project-desc" || p.kind === "project-pair-left") &&
+        "projectIndex" in p &&
         p.sectionIndex === sectionIndex &&
         p.projectIndex === projectIndex,
     );
@@ -237,40 +245,106 @@ export function DesignAlbum({ title, subtitle, sections }: Props) {
                   </AlbumPage>,
                 ]
               : []),
-            ...s.projects.flatMap((p, pIdx) => [
-              <AlbumPage
-                key={`${s.id}-${p.title}-desc`}
-                className="bg-white p-10 flex flex-col justify-center"
-              >
-                <p className="text-xs uppercase tracking-widest text-muted mb-4">Client</p>
-                <h3 className="font-serif text-3xl leading-snug mb-6">{p.title}</h3>
-                <p className="text-muted leading-relaxed">{p.description}</p>
-              </AlbumPage>,
-              <AlbumPage key={`${s.id}-${p.title}-image`} className="bg-white p-4">
-                <div
-                  className="w-full h-full grid gap-3"
-                  style={{ gridTemplateRows: `repeat(${p.images.length}, minmax(0, 1fr))` }}
+            ...s.projects.flatMap((p, pIdx) => {
+              if (s.layout === "image-pair") {
+                const leftSrc = p.images[0];
+                const rightSrc = p.images[1];
+                return [
+                  <AlbumPage
+                    key={`${s.id}-${p.title}-pair-left`}
+                    className="bg-white p-4 flex items-center justify-center"
+                  >
+                    {leftSrc && (
+                      <button
+                        type="button"
+                        onClick={() => openLightbox(sIdx, pIdx, 0)}
+                        className="relative w-full h-full block"
+                        aria-label={`Open ${p.title} full screen`}
+                      >
+                        <Image
+                          src={leftSrc}
+                          alt={p.title}
+                          fill
+                          sizes={`${PAGE_W}px`}
+                          className="object-contain"
+                        />
+                      </button>
+                    )}
+                  </AlbumPage>,
+                  <AlbumPage
+                    key={`${s.id}-${p.title}-pair-right`}
+                    className="bg-white p-4 relative"
+                  >
+                    {rightSrc && (
+                      <>
+                        <div
+                          className="w-full h-full overflow-y-auto"
+                          onWheel={(e) => e.stopPropagation()}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          onTouchStart={(e) => e.stopPropagation()}
+                          onTouchMove={(e) => e.stopPropagation()}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={rightSrc}
+                            alt={`${p.title} — one-pager`}
+                            className="w-full h-auto block select-none"
+                            draggable={false}
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openLightbox(sIdx, pIdx, 1);
+                          }}
+                          onMouseDown={(e) => e.stopPropagation()}
+                          onTouchStart={(e) => e.stopPropagation()}
+                          className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/95 border border-accent/60 text-accent text-[10px] uppercase tracking-[0.2em] px-3 py-1.5 shadow-sm hover:bg-accent hover:text-white hover:border-accent transition-colors"
+                          aria-label={`Open ${p.title} one-pager full screen`}
+                        >
+                          Expand
+                        </button>
+                      </>
+                    )}
+                  </AlbumPage>,
+                ];
+              }
+              return [
+                <AlbumPage
+                  key={`${s.id}-${p.title}-desc`}
+                  className="bg-white p-10 flex flex-col justify-center"
                 >
-                  {p.images.map((src, iIdx) => (
-                    <button
-                      key={src}
-                      type="button"
-                      onClick={() => openLightbox(sIdx, pIdx, iIdx)}
-                      className="relative w-full h-full block"
-                      aria-label={`Open ${p.title} full screen${p.images.length > 1 ? ` (${iIdx + 1})` : ""}`}
-                    >
-                      <Image
-                        src={src}
-                        alt={p.title}
-                        fill
-                        sizes={`${PAGE_W}px`}
-                        className="object-contain"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </AlbumPage>,
-            ]),
+                  <p className="text-xs uppercase tracking-widest text-muted mb-4">Client</p>
+                  <h3 className="font-serif text-3xl leading-snug mb-6">{p.title}</h3>
+                  <p className="text-muted leading-relaxed">{p.description}</p>
+                </AlbumPage>,
+                <AlbumPage key={`${s.id}-${p.title}-image`} className="bg-white p-4">
+                  <div
+                    className="w-full h-full grid gap-3"
+                    style={{ gridTemplateRows: `repeat(${p.images.length}, minmax(0, 1fr))` }}
+                  >
+                    {p.images.map((src, iIdx) => (
+                      <button
+                        key={src}
+                        type="button"
+                        onClick={() => openLightbox(sIdx, pIdx, iIdx)}
+                        className="relative w-full h-full block"
+                        aria-label={`Open ${p.title} full screen${p.images.length > 1 ? ` (${iIdx + 1})` : ""}`}
+                      >
+                        <Image
+                          src={src}
+                          alt={p.title}
+                          fill
+                          sizes={`${PAGE_W}px`}
+                          className="object-contain"
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </AlbumPage>,
+              ];
+            }),
           ])}
 
           <AlbumPage
