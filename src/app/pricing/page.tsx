@@ -9,7 +9,8 @@ const tiers = [
     rate: "$2,000",
     unit: "per day",
     notes: [
-      "Full-day coverage, delivered as high-resolution edited files.",
+      "A full day is defined as any shoot where I am onsite for 6 hours or more.",
+      "All images delivered as high-resolution edited files.",
       "Partial-day rates available for shorter shoots.",
       "Reduced rates available for non-profits and amateur sports.",
       "Travel and expenses billed at cost.",
