@@ -1,7 +1,7 @@
 "use client";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PhotoSection } from "@/content/galleries";
 import { LightboxViewer } from "./LightboxViewer";
 
@@ -39,8 +39,6 @@ export function PhotoAlbumMobile({ title, subtitle, sections }: Props) {
     emblaApi?.scrollTo(0);
     setSelected(0);
   }, [sectionIndex, emblaApi]);
-
-  const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
 
   const openAt = (localIndex: number) => {
     const offset = sections
@@ -133,20 +131,6 @@ export function PhotoAlbumMobile({ title, subtitle, sections }: Props) {
               {selected + 1} / {images.length}
             </span>
             <span className="text-xs uppercase tracking-widest">Swipe or tap to view</span>
-          </div>
-          <div className="grid grid-cols-6 gap-2 px-2">
-            {images.map((img, i) => (
-              <button
-                key={img.src}
-                type="button"
-                onClick={() => scrollTo(i)}
-                className={`relative aspect-[3/2] overflow-hidden border transition-colors ${
-                  selected === i ? "border-accent" : "border-line"
-                }`}
-              >
-                <Image src={img.src} alt="" fill sizes="60px" className="object-cover" />
-              </button>
-            ))}
           </div>
         </>
       )}

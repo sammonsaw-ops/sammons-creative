@@ -55,7 +55,6 @@ export function DesignAlbum({ title, subtitle, sections }: Props) {
   const isDesktop = useIsDesktop();
   const [open, setOpen] = useState(-1);
   const [pageNo, setPageNo] = useState(0);
-  const [thumbSectionOverride, setThumbSectionOverride] = useState<number | null>(null);
   const bookRef = useRef<{ pageFlip: () => { flip: (n: number) => void } } | null>(null);
 
   const pages = useMemo(() => buildPages(sections), [sections]);
@@ -78,32 +77,15 @@ export function DesignAlbum({ title, subtitle, sections }: Props) {
   }
 
   const currentPage = pages[pageNo];
-  const derivedSection =
+  const activeSection =
     currentPage && "sectionIndex" in currentPage ? currentPage.sectionIndex : 0;
-  const activeSection = thumbSectionOverride ?? derivedSection;
-  const section = sections[activeSection];
-
-  const findProjectPage = (sectionIndex: number, projectIndex: number) =>
-    pages.findIndex(
-      (p) =>
-        (p.kind === "project-desc" || p.kind === "project-pair-left") &&
-        "projectIndex" in p &&
-        p.sectionIndex === sectionIndex &&
-        p.projectIndex === projectIndex,
-    );
 
   const findDividerPage = (sectionIndex: number) =>
     pages.findIndex((p) => p.kind === "divider" && p.sectionIndex === sectionIndex);
 
-  const gotoProject = (sectionIndex: number, projectIndex: number) => {
-    const target = findProjectPage(sectionIndex, projectIndex);
-    if (target >= 0) bookRef.current?.pageFlip()?.flip(target);
-  };
-
   const gotoSection = (sectionIndex: number) => {
     const target = findDividerPage(sectionIndex);
     if (target >= 0) bookRef.current?.pageFlip()?.flip(target);
-    setThumbSectionOverride(null);
   };
 
   const openLightbox = (sectionIndex: number, projectIndex: number, imageIndex: number) => {
@@ -170,7 +152,6 @@ export function DesignAlbum({ title, subtitle, sections }: Props) {
           disableFlipByClick={false}
           onFlip={(e: { data: number }) => {
             setPageNo(e.data);
-            setThumbSectionOverride(null);
           }}
         >
           <AlbumPage
@@ -359,47 +340,6 @@ export function DesignAlbum({ title, subtitle, sections }: Props) {
           </AlbumPage>
         </HTMLFlipBook>
       </div>
-
-      {section && section.projects.length > 0 && (
-        <div className="w-full max-w-4xl">
-          <div className="flex items-baseline justify-between mb-3">
-            <p className="text-xs uppercase tracking-widest text-muted">
-              Jump to a project — {section.title}
-            </p>
-            <p className="text-xs text-muted">
-              {section.projects.length}{" "}
-              {section.projects.length === 1 ? "project" : "projects"}
-            </p>
-          </div>
-          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-            {section.projects.map((p, i) => {
-              const pageIdx = findProjectPage(activeSection, i);
-              const active = pageNo === pageIdx || pageNo === pageIdx + 1;
-              return (
-                <button
-                  key={p.title}
-                  type="button"
-                  onClick={() => gotoProject(activeSection, i)}
-                  className={`relative aspect-video overflow-hidden border transition-colors ${
-                    active ? "border-accent" : "border-line hover:border-accent/60"
-                  }`}
-                  aria-label={`Flip to ${p.title}`}
-                >
-                  {p.images[0] && (
-                    <Image
-                      src={p.images[0]}
-                      alt=""
-                      fill
-                      sizes="100px"
-                      className="object-cover"
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       <LightboxViewer images={flatImages} index={open} onClose={() => setOpen(-1)} />
     </div>

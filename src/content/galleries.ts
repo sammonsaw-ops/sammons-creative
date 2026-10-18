@@ -354,7 +354,7 @@ const graphicDesign: DesignGallery = {
       subtitle: "Select client and personal work · 2014 to present",
       layout: "image-pair",
       intro:
-        "A selection of independent design projects spanning more than a decade — brand identities, exhibition work, and campaign pieces delivered for clients across North America and Iceland. Each spread pairs a featured artifact on the left with its full case-study one-pager on the right.",
+        "A selection of independent design projects spanning more than a decade — brand identities, exhibition work, and campaign pieces delivered for clients across North America and Iceland. Each project pairs a featured piece with its full case-study one-pager.",
       projects: independentProjects,
     },
     {

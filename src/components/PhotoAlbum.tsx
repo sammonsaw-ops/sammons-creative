@@ -45,7 +45,6 @@ export function PhotoAlbum({ title, subtitle, sections }: Props) {
   const [open, setOpen] = useState(-1);
   const bookRef = useRef<{ pageFlip: () => { flip: (n: number) => void } } | null>(null);
   const [pageNo, setPageNo] = useState(0);
-  const [thumbSectionOverride, setThumbSectionOverride] = useState<number | null>(null);
 
   const pages = useMemo(() => buildPages(sections), [sections]);
   const flatImages = useMemo(
@@ -64,31 +63,15 @@ export function PhotoAlbum({ title, subtitle, sections }: Props) {
   }
 
   const currentPage = pages[pageNo];
-  const derivedSection =
+  const activeSection =
     currentPage && "sectionIndex" in currentPage ? currentPage.sectionIndex : 0;
-  const activeSection = thumbSectionOverride ?? derivedSection;
-  const section = sections[activeSection];
-
-  const findImagePage = (sectionIndex: number, imageIndex: number) =>
-    pages.findIndex(
-      (p) =>
-        p.kind === "image" &&
-        p.sectionIndex === sectionIndex &&
-        p.imageIndex === imageIndex,
-    );
 
   const findDividerPage = (sectionIndex: number) =>
     pages.findIndex((p) => p.kind === "divider" && p.sectionIndex === sectionIndex);
 
-  const gotoImage = (sectionIndex: number, imageIndex: number) => {
-    const target = findImagePage(sectionIndex, imageIndex);
-    if (target >= 0) bookRef.current?.pageFlip()?.flip(target);
-  };
-
   const gotoSection = (sectionIndex: number) => {
     const target = findDividerPage(sectionIndex);
     if (target >= 0) bookRef.current?.pageFlip()?.flip(target);
-    setThumbSectionOverride(null);
   };
 
   const openLightbox = (sectionIndex: number, imageIndex: number) => {
@@ -150,7 +133,6 @@ export function PhotoAlbum({ title, subtitle, sections }: Props) {
           disableFlipByClick={false}
           onFlip={(e: { data: number }) => {
             setPageNo(e.data);
-            setThumbSectionOverride(null);
           }}
         >
           <AlbumPage
@@ -236,38 +218,6 @@ export function PhotoAlbum({ title, subtitle, sections }: Props) {
           </AlbumPage>
         </HTMLFlipBook>
       </div>
-
-      {section && section.images.length > 0 && (
-        <div className="w-full max-w-4xl">
-          <div className="flex items-baseline justify-between mb-3">
-            <p className="text-xs uppercase tracking-widest text-muted">
-              Jump to a page — {section.title}
-            </p>
-            <p className="text-xs text-muted">
-              {section.images.length} {section.images.length === 1 ? "image" : "images"}
-            </p>
-          </div>
-          <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-2">
-            {section.images.map((img, i) => {
-              const pageIdx = findImagePage(activeSection, i);
-              const active = pageNo === pageIdx || pageNo === pageIdx - 1;
-              return (
-                <button
-                  key={img.src}
-                  type="button"
-                  onClick={() => gotoImage(activeSection, i)}
-                  className={`relative aspect-[3/2] overflow-hidden border transition-colors ${
-                    active ? "border-accent" : "border-line hover:border-accent/60"
-                  }`}
-                  aria-label={`Flip to ${section.title} image ${i + 1}`}
-                >
-                  <Image src={img.src} alt="" fill sizes="80px" className="object-cover" />
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       <LightboxViewer images={flatImages} index={open} onClose={() => setOpen(-1)} />
     </div>
