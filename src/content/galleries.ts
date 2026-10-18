@@ -287,39 +287,12 @@ const bannerCampaignProjects: DesignProject[] = [
 
 const independentProjects: DesignProject[] = [
   {
-    title: "Seeing All Sides — Liu Institute Lobby Gallery",
+    title: "Aggressive Goose Brewing Co.",
     description:
-      "Twenty-piece photo exhibition and opening-night silent auction at UBC's Liu Institute Lobby Gallery, raising funds for the Environmental Youth Alliance. Concept, imagery, poster, and production, end-to-end. 2014.",
+      "Full brand proposal for a craft brewery — primary mark, mono variant, three-colour palette, and a four-beer label architecture, delivered end-to-end. 2025.",
     images: [
-      "/galleries/graphic-design/independent/liu-institute-feature.jpg",
-      "/galleries/graphic-design/independent/liu-institute-onepager.png",
-    ],
-  },
-  {
-    title: "Nova Scotia Power — Customer Solutions Trading Cards",
-    description:
-      "A five-week collectible trading card series that turned a 17-person Customer Solutions team into a league of their own — concepted, designed, produced, and distributed end-to-end. 2017.",
-    images: [
-      "/galleries/graphic-design/independent/nova-scotia-power-feature.png",
-      "/galleries/graphic-design/independent/nova-scotia-power-onepager.png",
-    ],
-  },
-  {
-    title: "Critical Gambling Studies Journal",
-    description:
-      "Visual identity for a peer-reviewed open-access journal — wordmark, square mark, cover architecture, and templated artwork for web, slides, and social. 2021.",
-    images: [
-      "/galleries/graphic-design/independent/critical-gambling-studies-feature.png",
-      "/galleries/graphic-design/independent/critical-gambling-studies-onepager.png",
-    ],
-  },
-  {
-    title: "PAC Lab Logo Refresh",
-    description:
-      "Logo refresh for a Dalhousie research lab studying physical activity in cancer care — the ribbon-heart stayed, and learned to walk. 2021.",
-    images: [
-      "/galleries/graphic-design/independent/paclab-feature.png",
-      "/galleries/graphic-design/independent/paclab-onepager.png",
+      "/galleries/graphic-design/independent/aggressive-goose-feature.png",
+      "/galleries/graphic-design/independent/aggressive-goose-onepager.png",
     ],
   },
   {
@@ -332,12 +305,39 @@ const independentProjects: DesignProject[] = [
     ],
   },
   {
-    title: "Aggressive Goose Brewing Co.",
+    title: "PAC Lab Logo Refresh",
     description:
-      "Full brand proposal for a craft brewery — primary mark, mono variant, three-colour palette, and a four-beer label architecture, delivered end-to-end. 2025.",
+      "Logo refresh for a Dalhousie research lab studying physical activity in cancer care — the ribbon-heart stayed, and learned to walk. 2021.",
     images: [
-      "/galleries/graphic-design/independent/aggressive-goose-feature.png",
-      "/galleries/graphic-design/independent/aggressive-goose-onepager.png",
+      "/galleries/graphic-design/independent/paclab-feature.png",
+      "/galleries/graphic-design/independent/paclab-onepager.png",
+    ],
+  },
+  {
+    title: "Critical Gambling Studies Journal",
+    description:
+      "Visual identity for a peer-reviewed open-access journal — wordmark, square mark, cover architecture, and templated artwork for web, slides, and social. 2021.",
+    images: [
+      "/galleries/graphic-design/independent/critical-gambling-studies-feature.png",
+      "/galleries/graphic-design/independent/critical-gambling-studies-onepager.png",
+    ],
+  },
+  {
+    title: "Nova Scotia Power — Customer Solutions Trading Cards",
+    description:
+      "A five-week collectible trading card series that turned a 17-person Customer Solutions team into a league of their own — concepted, designed, produced, and distributed end-to-end. 2017.",
+    images: [
+      "/galleries/graphic-design/independent/nova-scotia-power-feature.png",
+      "/galleries/graphic-design/independent/nova-scotia-power-onepager.png",
+    ],
+  },
+  {
+    title: "Seeing All Sides — Liu Institute Lobby Gallery",
+    description:
+      "Twenty-piece photo exhibition and opening-night silent auction at UBC's Liu Institute Lobby Gallery, raising funds for the Environmental Youth Alliance. Concept, imagery, poster, and production, end-to-end. 2014.",
+    images: [
+      "/galleries/graphic-design/independent/liu-institute-feature.jpg",
+      "/galleries/graphic-design/independent/liu-institute-onepager.png",
     ],
   },
 ];
