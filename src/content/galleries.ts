@@ -172,6 +172,51 @@ const ecgaaImages = [
   alt: "Eastern Canada GAA",
 }));
 
+const aflCanadaImages = [
+  "img-0863.jpg",
+  "img-0864.jpg",
+  "img-1091.jpg",
+  "img-1206.jpg",
+  "img-1233.jpg",
+  "img-1378.jpg",
+  "img-1440.jpg",
+  "img-1535.jpg",
+  "img-1539.jpg",
+  "img-1619.jpg",
+  "img-1705.jpg",
+  "img-1709.jpg",
+  "img-2044.jpg",
+  "img-2188.jpg",
+  "img-2320.jpg",
+  "img-2333.jpg",
+  "img-2427.jpg",
+  "img-2566.jpg",
+  "img-2943.jpg",
+  "img-2947.jpg",
+  "img-3203.jpg",
+  "img-3276.jpg",
+  "img-3309.jpg",
+  "img-3830.jpg",
+  "img-3851.jpg",
+  "img-3959.jpg",
+  "img-3988.jpg",
+  "img-4302.jpg",
+  "img-5129.jpg",
+  "img-5387.jpg",
+  "img-5540.jpg",
+  "img-5705.jpg",
+  "img-5721.jpg",
+  "img-5938.jpg",
+  "img-5947.jpg",
+  "img-6005.jpg",
+  "img-6102.jpg",
+  "img-6309.jpg",
+  "img-6310.jpg",
+].map((file) => ({
+  src: `/galleries/sports/afl-canada/${file}`,
+  alt: "AFL Canada",
+}));
+
 const gaaCanadaImages = [
   "img-3521wbg-8x12.jpg",
   "img-3885-wm-8x12.jpg",
@@ -224,6 +269,18 @@ const sports: PhotoGallery = {
   cover: "/galleries/sports/game-1-09.jpg",
   sections: [
     {
+      id: "gaa-canada",
+      title: "GAA Canada",
+      logo: "/sections/sports/gaa-canada.png",
+      images: gaaCanadaImages,
+    },
+    {
+      id: "afl-canada",
+      title: "AFL Canada",
+      logo: "/sections/sports/afl-canada.png",
+      images: aflCanadaImages,
+    },
+    {
       id: "afl-atlantic",
       title: "AFL Atlantic",
       logo: "/sections/sports/afl-atlantic.png",
@@ -234,12 +291,6 @@ const sports: PhotoGallery = {
       title: "Eastern Canada Gaelic Athletic Association (ECGAA)",
       logo: "/sections/sports/ecgaa.jpg",
       images: ecgaaImages,
-    },
-    {
-      id: "gaa-canada",
-      title: "GAA Canada",
-      logo: "/sections/sports/gaa-canada.png",
-      images: gaaCanadaImages,
     },
   ],
 };
