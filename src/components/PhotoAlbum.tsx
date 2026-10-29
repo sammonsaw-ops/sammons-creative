@@ -1,4 +1,5 @@
 "use client";
+import type { CSSProperties } from "react";
 import { useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -15,7 +16,9 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
 
 type Props = {
   title: string;
+  coverTitleLines?: string[];
   subtitle?: string;
+  showImageCaptions?: boolean;
   sections: PhotoSection[];
 };
 
@@ -40,7 +43,13 @@ function buildPages(sections: PhotoSection[]): PageMeta[] {
   return pages;
 }
 
-export function PhotoAlbum({ title, subtitle, sections }: Props) {
+export function PhotoAlbum({
+  title,
+  coverTitleLines,
+  subtitle,
+  showImageCaptions,
+  sections,
+}: Props) {
   const isDesktop = useIsDesktop();
   const [open, setOpen] = useState(-1);
   const bookRef = useRef<{ pageFlip: () => { flip: (n: number) => void } } | null>(null);
@@ -58,7 +67,13 @@ export function PhotoAlbum({ title, subtitle, sections }: Props) {
 
   if (!isDesktop) {
     return (
-      <PhotoAlbumMobile title={title} subtitle={subtitle} sections={sections} />
+      <PhotoAlbumMobile
+        title={title}
+        coverTitleLines={coverTitleLines}
+        subtitle={subtitle}
+        showImageCaptions={showImageCaptions}
+        sections={sections}
+      />
     );
   }
 
@@ -141,7 +156,15 @@ export function PhotoAlbum({ title, subtitle, sections }: Props) {
             style={{ backgroundColor: "#f2ece0" }}
           >
             <p className="text-xs uppercase tracking-[0.3em] text-accent mb-6">Portfolio</p>
-            <h2 className="font-serif text-5xl leading-tight">{title}</h2>
+            <h2 className="font-serif text-5xl leading-tight">
+              {coverTitleLines
+                ? coverTitleLines.map((line, i) => (
+                    <span key={i} className="block">
+                      {line}
+                    </span>
+                  ))
+                : title}
+            </h2>
             {subtitle && (
               <p className="italic text-muted mt-4 text-center px-2 text-balance">{subtitle}</p>
             )}
@@ -183,27 +206,48 @@ export function PhotoAlbum({ title, subtitle, sections }: Props) {
                 </p>
               )}
             </AlbumPage>,
-            ...s.images.map((img, iIdx) => (
-              <AlbumPage
-                key={img.src}
-                className="bg-white p-3 flex items-center justify-center"
-              >
-                <button
-                  type="button"
-                  onClick={() => openLightbox(sIdx, iIdx)}
-                  className="relative w-full h-full block"
-                  aria-label={`Open image ${iIdx + 1} of ${s.title} full screen`}
-                >
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    sizes={`${PAGE_W}px`}
-                    className="object-contain"
-                  />
-                </button>
-              </AlbumPage>
-            )),
+            ...s.images.map((img, iIdx) => {
+              const w = img.width;
+              const h = img.height;
+              const buttonStyle: CSSProperties =
+                w && h
+                  ? {
+                      aspectRatio: `${w} / ${h}`,
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      width: w >= h ? "100%" : "auto",
+                      height: w >= h ? "auto" : "100%",
+                    }
+                  : { width: "100%", height: "100%" };
+              return (
+                <AlbumPage key={img.src} className="bg-white p-3">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <button
+                      type="button"
+                      onClick={() => openLightbox(sIdx, iIdx)}
+                      className="relative block"
+                      style={buttonStyle}
+                      aria-label={`Open image ${iIdx + 1} of ${s.title} full screen`}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        sizes={`${PAGE_W}px`}
+                        className="object-contain"
+                      />
+                      {showImageCaptions && img.alt && (
+                        <div className="absolute left-0 right-0 bottom-0 bg-black/60 backdrop-blur-sm px-3 py-2 pointer-events-none">
+                          <p className="font-serif italic text-white text-sm text-center">
+                            {img.alt}
+                          </p>
+                        </div>
+                      )}
+                    </button>
+                  </div>
+                </AlbumPage>
+              );
+            }),
           ])}
 
           <AlbumPage

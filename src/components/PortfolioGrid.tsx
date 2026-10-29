@@ -4,10 +4,11 @@ import { galleries } from "@/content/galleries";
 
 const covers: Record<string, string | null> = {
   sports: "/galleries/sports/afl-canada/img-0863.jpg",
-  "form-structure": null,
+  "commercial-real-estate":
+    "/galleries/commercial-real-estate/1230-blackfoot-drive-regina.jpg",
   "graphic-design":
     "/galleries/graphic-design/independent/rv-tolfraedi-feature.png",
-  "side-projects": null,
+  "side-projects": "/side-projects/bc-place-wireframe.jpg",
 };
 
 export function PortfolioGrid() {
@@ -36,7 +37,15 @@ export function PortfolioGrid() {
               <p className="text-xs uppercase tracking-[0.3em] text-accent mb-3">
                 Portfolio
               </p>
-              <h2 className="font-serif text-4xl md:text-5xl">{g.title}</h2>
+              <h2 className="font-serif text-4xl md:text-5xl">
+                {g.kind === "photo" && g.coverTitleLines
+                  ? g.coverTitleLines.map((line, i) => (
+                      <span key={i} className="block">
+                        {line}
+                      </span>
+                    ))
+                  : g.title}
+              </h2>
               {soon ? (
                 <span className="mt-6 text-xs uppercase tracking-[0.3em] text-muted">
                   Coming soon

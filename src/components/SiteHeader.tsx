@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const portfolios = [
   { href: "/sports", label: "Sports Photography" },
-  { href: "/form-structure", label: "Form & Structure Photography" },
+  { href: "/commercial-real-estate", label: "Commercial Real Estate" },
   { href: "/graphic-design", label: "Graphic Design" },
   { href: "/side-projects", label: "Side Projects" },
 ];

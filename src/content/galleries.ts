@@ -1,6 +1,8 @@
 export type PhotoEntry = {
   src: string;
   alt: string;
+  width?: number;
+  height?: number;
 };
 
 export type PhotoSection = {
@@ -15,9 +17,11 @@ export type PhotoGallery = {
   id: string;
   kind: "photo";
   title: string;
+  coverTitleLines?: string[];
   subtitle?: string;
   intro?: string;
   cover: string;
+  showImageCaptions?: boolean;
   sections: PhotoSection[];
 };
 
@@ -420,13 +424,38 @@ const graphicDesign: DesignGallery = {
   ],
 };
 
-const formStructure: ComingSoonGallery = {
-  id: "form-structure",
-  kind: "coming-soon",
-  title: "Form & Structure Photography",
-  subtitle: "Architecture · Buildings · Infrastructure",
-  intro:
-    "New portfolio coming soon. In the meantime, reach out for shoot inquiries and rates.",
+const commercialRealEstateImages: PhotoEntry[] = (
+  [
+    ["1230-blackfoot-drive-regina.jpg", "1230 Blackfoot Drive, Regina", 2560, 1707],
+    ["1380-23rd-ave-regina.jpg", "1380 23rd Ave, Regina", 2560, 1707],
+    ["1488-birmingham-street-halifax.jpg", "1488 Birmingham Street, Halifax", 2560, 1707],
+    ["1800-hamilton-street-regina.jpg", "1800 Hamilton Street, Regina", 1707, 2560],
+    ["1801-hamilton-street-regina.jpg", "1801 Hamilton Street, Regina", 1707, 2560],
+    ["1874-1881-scarth-street-regina.jpg", "1874 & 1881 Scarth Street, Regina", 1707, 2560],
+    ["1915-hamilton-street-regina.jpg", "1915 Hamilton Street, Regina", 2560, 1707],
+    ["2103-11th-avenue-regina.jpg", "2103 11th Avenue, Regina", 1707, 2560],
+  ] as const
+).map(([file, alt, width, height]) => ({
+  src: `/galleries/commercial-real-estate/${file}`,
+  alt,
+  width,
+  height,
+}));
+
+const commercialRealEstate: PhotoGallery = {
+  id: "commercial-real-estate",
+  kind: "photo",
+  title: "Commercial Real Estate",
+  coverTitleLines: ["Commercial", "Real Estate"],
+  cover: "/galleries/commercial-real-estate/1230-blackfoot-drive-regina.jpg",
+  showImageCaptions: true,
+  sections: [
+    {
+      id: "commercial-properties",
+      title: "Commercial Properties",
+      images: commercialRealEstateImages,
+    },
+  ],
 };
 
 const sideProjects: ExperimentsGallery = {
@@ -448,7 +477,7 @@ const sideProjects: ExperimentsGallery = {
   ],
 };
 
-export const galleries: Gallery[] = [sports, graphicDesign, formStructure, sideProjects];
+export const galleries: Gallery[] = [sports, graphicDesign, commercialRealEstate, sideProjects];
 
 export function getGallery(id: string): Gallery | undefined {
   return galleries.find((g) => g.id === id);

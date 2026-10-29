@@ -25,7 +25,13 @@ export default async function GalleryPage({ params }: PageProps<"/[gallery]">) {
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12 md:py-16">
       {g.kind === "photo" && (
-        <PhotoAlbum title={g.title} subtitle={g.subtitle} sections={g.sections} />
+        <PhotoAlbum
+          title={g.title}
+          coverTitleLines={g.coverTitleLines}
+          subtitle={g.subtitle}
+          showImageCaptions={g.showImageCaptions}
+          sections={g.sections}
+        />
       )}
 
       {g.kind === "design" && (
